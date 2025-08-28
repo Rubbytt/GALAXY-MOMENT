@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成 GALAXY ID - 银河时刻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Arial', 'Microsoft YaHei', sans-serif;
+            background: #000;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .container {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(132, 160, 209, 1) 0%, rgba(210, 222, 244, 1) 100%);
+        }
+
+        /* 背景图片覆盖层 */
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        /* 粒子效果 */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        .particle:nth-child(1) { left: 8%; animation-delay: 0s; animation-duration: 8s; }
+        .particle:nth-child(2) { left: 13%; animation-delay: 0.1s; animation-duration: 10s; }
+        .particle:nth-child(3) { left: 18%; animation-delay: 0.2s; animation-duration: 7s; }
+        .particle:nth-child(4) { left: 22%; animation-delay: 0.3s; animation-duration: 9s; }
+        .particle:nth-child(5) { left: 27%; animation-delay: 0.4s; animation-duration: 6s; }
+        .particle:nth-child(6) { left: 31%; animation-delay: 0.5s; animation-duration: 11s; }
+        .particle:nth-child(7) { left: 36%; animation-delay: 0.6s; animation-duration: 8s; }
+        .particle:nth-child(8) { left: 41%; animation-delay: 0.7s; animation-duration: 10s; }
+        .particle:nth-child(9) { left: 44%; animation-delay: 0.8s; animation-duration: 7s; }
+        .particle:nth-child(10) { left: 49%; animation-delay: 0.9s; animation-duration: 9s; }
+        .particle:nth-child(11) { left: 53%; animation-delay: 1s; animation-duration: 6s; }
+        .particle:nth-child(12) { left: 58%; animation-delay: 1.1s; animation-duration: 8s; }
+        .particle:nth-child(13) { left: 62%; animation-delay: 1.2s; animation-duration: 10s; }
+        .particle:nth-child(14) { left: 67%; animation-delay: 1.3s; animation-duration: 7s; }
+        .particle:nth-child(15) { left: 71%; animation-delay: 1.4s; animation-duration: 9s; }
+        .particle:nth-child(16) { left: 76%; animation-delay: 1.5s; animation-duration: 8s; }
+        .particle:nth-child(17) { left: 79%; animation-delay: 1.6s; animation-duration: 10s; }
+        .particle:nth-child(18) { left: 84%; animation-delay: 1.7s; animation-duration: 7s; }
+        .particle:nth-child(19) { left: 87%; animation-delay: 1.8s; animation-duration: 9s; }
+        .particle:nth-child(20) { left: 92%; animation-delay: 1.9s; animation-duration: 6s; }
+        .particle:nth-child(21) { left: 6%; animation-delay: 2s; animation-duration: 11s; }
+        .particle:nth-child(22) { left: 11%; animation-delay: 2.1s; animation-duration: 8s; }
+        .particle:nth-child(23) { left: 16%; animation-delay: 2.2s; animation-duration: 10s; }
+        .particle:nth-child(24) { left: 21%; animation-delay: 2.3s; animation-duration: 7s; }
+        .particle:nth-child(25) { left: 26%; animation-delay: 2.4s; animation-duration: 9s; }
+        .particle:nth-child(26) { left: 33%; animation-delay: 2.5s; animation-duration: 6s; }
+        .particle:nth-child(27) { left: 38%; animation-delay: 2.6s; animation-duration: 8s; }
+        .particle:nth-child(28) { left: 43%; animation-delay: 2.7s; animation-duration: 10s; }
+        .particle:nth-child(29) { left: 48%; animation-delay: 2.8s; animation-duration: 7s; }
+        .particle:nth-child(30) { left: 54%; animation-delay: 2.9s; animation-duration: 9s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) scale(1);
+            }
+            100% {
+                transform: translateY(0vh) scale(0);
+                opacity: 0;
+            }
+        }
+
+
+
+        /* Loading圆环 */
+        .loading-circle {
+            position: absolute;
+            width: 147px;
+            height: 147px;
+            left: 121px;
+            top: 389px;
+            z-index: 10;
+        }
+
+        .loading-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: rotate 3s linear infinite, fadeIn 0.5s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 生成你的 GALAXY ID 文字 */
+        .galaxy-id-text {
+            position: absolute;
+            top: 164px;
+            left: 85px;
+            width: 220px;
+            height: 154px;
+            background-image: url('./images/galaxy-id-text.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 8;
+            animation: fadeInUp 4s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            position: absolute;
+            top: 55px;
+            left: 31px;
+            width: 45px;
+            height: 45px;
+            z-index: 20;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .back-arrow {
+            width: 23px;
+            height: 3px;
+            background: #D1DAE5;
+            position: relative;
+        }
+
+        .back-arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 3px;
+            background: #D1DAE5;
+            transform: rotate(-45deg);
+            transform-origin: left center;
+        }
+
+        .back-arrow::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 3px;
+            background: #D1DAE5;
+            transform: rotate(45deg);
+            transform-origin: left center;
+        }
+
+
+
+        @media (max-width: 390px) {
+            .container {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 背景图片覆盖层 -->
+        <div class="background-overlay"></div>
+
+        <!-- 粒子效果 -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <!-- Loading圆环 -->
+        <div class="loading-circle">
+            <img src="./images/loading-circle.png" alt="Loading Circle">
+        </div>
+
+        <!-- 生成你的 GALAXY ID 文字 -->
+        <div class="galaxy-id-text"></div>
+
+
+
+        <!-- 返回按钮 -->
+        <div class="back-button" onclick="goBack()">
+            <div class="back-arrow"></div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            // 返回上一页
+            window.history.back();
+        }
+
+        // 模拟生成进度
+        let generationProgress = 0;
+        const progressInterval = setInterval(() => {
+            generationProgress += 2;
+            if (generationProgress >= 100) {
+                clearInterval(progressInterval);
+                // 生成完成后的逻辑
+                setTimeout(() => {
+                    // 这里可以跳转到下一个页面或显示生成完成
+                    console.log('GALAXY ID 生成完成');
+                    // 可以添加跳转逻辑
+                    // window.location.href = './page5.html';
+                }, 1000);
+            }
+        }, 100);
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page4 loaded successfully');
+            console.log('开始生成 GALAXY ID...');
+            
+            // 4秒后自动跳转到page5
+            setTimeout(() => {
+                console.log('4秒后自动跳转到page5');
+                window.location.href = './page5.html';
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

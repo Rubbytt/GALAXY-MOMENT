@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择声音 - 银河时刻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Arial', 'Microsoft YaHei', sans-serif;
+            background: #000;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .container {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(135, 163, 210, 1) 12%, rgba(212, 223, 245, 1) 50%, rgba(162, 181, 229, 1) 74%);
+        }
+
+        /* 背景图片 */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 390px;
+            height: 844px;
+            background-image: url('./images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        /* 美学领航员背景 */
+        .aesthetic-background {
+            position: absolute;
+            top: 146px;
+            left: 0;
+            width: 390px;
+            height: 480px;
+            background-image: url('./images/aesthetic-background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 2;
+        }
+
+        /* 标题 */
+        .title {
+            position: absolute;
+            top: 60px;
+            left: 121px;
+            width: 200px;
+            height: 28px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 23px;
+            line-height: 1.21em;
+            letter-spacing: 30%;
+            background: linear-gradient(180deg, rgba(231, 237, 246, 1) 58%, rgba(189, 208, 229, 1) 81%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            position: absolute;
+            top: 55px;
+            left: 31px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .back-arrow {
+            width: 23px;
+            height: 3px;
+            background: #D1DAE5;
+            position: relative;
+        }
+
+        .back-arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 12px;
+            height: 3px;
+            background: #D1DAE5;
+            transform: rotate(-45deg);
+            transform-origin: left center;
+        }
+
+        .back-arrow::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -1px;
+            width: 12px;
+            height: 3px;
+            background: #D1DAE5;
+            transform: rotate(45deg);
+            transform-origin: left center;
+        }
+
+        /* 更多按钮 */
+        .more-button {
+            position: absolute;
+            top: 55px;
+            right: 29px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .more-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .three-dots {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 4px;
+            height: 4px;
+            background: #FFFBFB;
+            border-radius: 50%;
+        }
+
+        /* 声音选择区域 */
+        .voice-selection {
+            position: absolute;
+            top: 558px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            z-index: 5;
+        }
+
+        .voice-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .voice-card:hover {
+            transform: scale(1.05);
+        }
+
+        .voice-card.selected {
+            transform: scale(1.1);
+            width: calc(74px + 5px);
+            height: calc(74px + 5px);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .voice-card.selected::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: calc(74px + 1px);
+            height: calc(74px + 1px);
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(0px);
+        }
+
+        .voice-1 {
+            width: 74px;
+            height: 74px;
+            background-image: url('./images/voice1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .voice-2 {
+            width: 74px;
+            height: 74px;
+            background-image: url('./images/voice2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .voice-3 {
+            width: 74px;
+            height: 74px;
+            background-image: url('./images/voice3.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* 选中状态指示器 */
+        .selection-indicator {
+            position: absolute;
+            top: 695px;
+            left: 149px;
+            width: 92px;
+            height: 38px;
+            background: rgba(196, 209, 248, 0.7);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 6;
+        }
+
+        .selection-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1.21em;
+            letter-spacing: 3%;
+            color: #FFFFFF;
+        }
+
+        /* Continue按钮 */
+        .continue-button {
+            position: absolute;
+            bottom: 44px;
+            left: 103px;
+            width: 183px;
+            height: 46px;
+            background: #091331;
+            border-radius: 21px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .continue-button:hover {
+            background: #1a2b4a;
+            transform: scale(1.02);
+        }
+
+        .continue-button:active {
+            transform: scale(0.98);
+        }
+
+        .continue-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.21em;
+            letter-spacing: 3%;
+            color: #FFFFFF;
+            margin-right: 8px;
+        }
+
+        .continue-arrow {
+            width: 13px;
+            height: 2px;
+            background: #FFFFFF;
+            position: relative;
+        }
+
+        .continue-arrow::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0.5px;
+            width: 8px;
+            height: 2px;
+            background: #FFFFFF;
+            transform: rotate(45deg);
+            transform-origin: right center;
+        }
+
+        .continue-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -0.5px;
+            width: 8px;
+            height: 2px;
+            background: #FFFFFF;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+        @media (max-width: 390px) {
+            .container {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 背景图片 -->
+        <div class="background"></div>
+
+        <!-- 美学领航员背景 -->
+        <div class="aesthetic-background"></div>
+
+        <!-- 标题 -->
+        <div class="title">美学领航员</div>
+
+        <!-- 返回按钮 -->
+        <div class="back-button" onclick="goBack()">
+            <div class="back-arrow"></div>
+        </div>
+
+        <!-- 更多按钮 -->
+        <div class="more-button" onclick="showMore()">
+            <div class="three-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+
+
+        <!-- 声音选择区域 -->
+        <div class="voice-selection">
+            <div class="voice-card voice-1" onclick="selectVoice(1)"></div>
+            <div class="voice-card voice-2" onclick="selectVoice(2)"></div>
+            <div class="voice-card voice-3" onclick="selectVoice(3)"></div>
+        </div>
+
+        <!-- 选中状态指示器 -->
+        <div class="selection-indicator" id="selectionIndicator">
+            <div class="selection-text">voice#1</div>
+        </div>
+
+        <!-- Continue按钮 -->
+        <div class="continue-button" onclick="continueToNext()">
+            <div class="continue-text">Continue</div>
+            <div class="continue-arrow"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedVoice = 1;
+
+        function goBack() {
+            // 返回上一页（page2）
+            window.location.href = './page2.html';
+        }
+
+        function showMore() {
+            // 显示更多选项
+            alert('更多选项功能');
+        }
+
+        function selectVoice(voiceNumber) {
+            // 移除之前选中的状态
+            document.querySelectorAll('.voice-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // 添加选中状态
+            event.target.classList.add('selected');
+
+            // 更新选中状态
+            selectedVoice = voiceNumber;
+            updateSelectionIndicator(voiceNumber);
+
+            // 播放对应的声音
+            playVoice(voiceNumber);
+
+            // 重新排列图片：选中的图片居中，未选中的图片分布在两边
+            const voiceSelection = document.querySelector('.voice-selection');
+            const selectedCard = event.target;
+            
+            // 获取所有图片
+            const voice1 = document.querySelector('.voice-1');
+            const voice2 = document.querySelector('.voice-2');
+            const voice3 = document.querySelector('.voice-3');
+            
+            // 清空容器
+            voiceSelection.innerHTML = '';
+            
+            // 根据选中的图片重新排列
+            if (selectedCard.classList.contains('voice-1')) {
+                // 选中voice-1：voice-2在左，voice-1居中，voice-3在右
+                voiceSelection.appendChild(voice2);
+                voiceSelection.appendChild(selectedCard);
+                voiceSelection.appendChild(voice3);
+            } else if (selectedCard.classList.contains('voice-2')) {
+                // 选中voice-2：voice-1在左，voice-2居中，voice-3在右
+                voiceSelection.appendChild(voice1);
+                voiceSelection.appendChild(selectedCard);
+                voiceSelection.appendChild(voice3);
+            } else if (selectedCard.classList.contains('voice-3')) {
+                // 选中voice-3：voice-1在左，voice-2在右，voice-3居中
+                voiceSelection.appendChild(voice2);
+                voiceSelection.appendChild(selectedCard);
+                voiceSelection.appendChild(voice1);
+            }
+        }
+
+        function playVoice(voiceNumber) {
+            // 停止所有正在播放的音频
+            const allAudios = document.querySelectorAll('audio');
+            allAudios.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+
+            // 使用Web Speech API生成声音
+            if ('speechSynthesis' in window) {
+                // 停止当前播放的语音
+                speechSynthesis.cancel();
+                
+                // 创建语音合成对象
+                const utterance = new SpeechSynthesisUtterance("GALAXY MOMENT");
+                utterance.lang = 'en-US';
+                utterance.rate = 0.8; // 语速稍慢
+                utterance.pitch = 1.0; // 音调
+                
+                // 根据voiceNumber设置不同的声音特征
+                switch(voiceNumber) {
+                    case 1: // 女声
+                        utterance.pitch = 1.2; // 较高音调
+                        utterance.rate = 0.9;
+                        break;
+                    case 2: // 浑厚男声 - 重新设计
+                        utterance.pitch = 0.3; // 适中的低音调
+                        utterance.rate = 0.6; // 更慢的语速
+                        // 尝试选择更低沉的声音
+                        const voices = speechSynthesis.getVoices();
+                        const deepVoice = voices.find(voice => 
+                            voice.name.includes('James') || 
+                            voice.name.includes('Daniel') || 
+                            voice.name.includes('Alex') ||
+                            voice.name.includes('Google UK English Male')
+                        );
+                        if (deepVoice) {
+                            utterance.voice = deepVoice;
+                        }
+                        break;
+                    case 3: // 中性声
+                        utterance.pitch = 0.1; // 中等音调
+                        utterance.rate = 0.6;
+                        break;
+                }
+                
+                // 播放语音
+                speechSynthesis.speak(utterance);
+                
+                console.log(`播放 Voice ${voiceNumber}: GALAXY MOMENT`);
+            } else {
+                console.log('浏览器不支持语音合成');
+                // 如果浏览器不支持，尝试播放音频文件
+                const audioElement = document.getElementById(`voice${voiceNumber}-audio`);
+                if (audioElement) {
+                    audioElement.play().catch(error => {
+                        console.log('音频播放失败:', error);
+                    });
+                }
+            }
+        }
+
+        // 确保语音列表加载完成
+        speechSynthesis.onvoiceschanged = function() {
+            console.log('可用语音列表已加载');
+        };
+
+        function updateSelectionIndicator(voiceNumber) {
+            const indicator = document.getElementById('selectionIndicator');
+            const text = indicator.querySelector('.selection-text');
+            text.textContent = `voice#${voiceNumber}`;
+        }
+
+        function continueToNext() {
+            // 继续到下一步
+            console.log(`Selected voice: ${selectedVoice}`);
+            
+            // 检查是否已选择声音
+            if (selectedVoice && selectedVoice >= 1 && selectedVoice <= 3) {
+                // 跳转到下一页
+                window.location.href = './page4.html';
+            } else {
+                // 如果没有选择声音，提示用户
+                alert('请先选择一个声音');
+            }
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认选中第一个声音
+            document.querySelector('.voice-1').classList.add('selected');
+            console.log('Page3 loaded successfully');
+        });
+    </script>
+</body>
+</html>

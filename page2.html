@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择形象2.0 - 银河时刻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Arial', 'Microsoft YaHei', sans-serif;
+            background: #000;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .container {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            overflow: visible;
+            background: linear-gradient(180deg, rgba(95, 145, 207, 1) 0%, rgba(198, 208, 234, 1) 74%);
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/background.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .title {
+            position: absolute;
+            top: 151px;
+            left: 73px;
+            width: 243.5px;
+            height: 73.5px;
+            z-index: 25;
+            background-image: url('./images/title-text.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 55px;
+            left: 31px;
+            width: 45px;
+            height: 45px;
+            z-index: 30;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            transform: scale(1.1) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .back-arrow {
+            width: 23px;
+            height: 3px;
+            background: #D1DAE5;
+            position: relative;
+        }
+
+        .back-arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 3px;
+            background: #D1DAE5;
+            transform: rotate(-45deg);
+            transform-origin: left center;
+        }
+
+        .back-arrow::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 3px;
+            background: #D1DAE5;
+            transform: rotate(45deg);
+            transform-origin: left center;
+        }
+
+        .navigator-container {
+            position: absolute;
+            overflow: visible;
+            transition: top 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+
+
+
+
+
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        border-radius 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .next-arrow {
+            position: absolute;
+            background: rgba(239, 236, 236, 0.66);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        top 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        border-radius 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+
+
+        .arrow-icon {
+            background: #86A6D0;
+            position: relative;
+            display: block;
+            transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .arrow-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: #86A6D0;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+        /* 美学领航员 */
+        .aesthetic-container {
+            top: 258px;
+            left: calc(50% - 200px/2);
+            width: 200px;
+            height: 193.5px;
+            z-index: 5;
+            transition: top 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .aesthetic {
+            width: 100%;
+            height: 100%;
+        }
+
+        .aesthetic-container .card-image {
+            background-image: url('./images/aesthetic-card.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+
+
+
+
+
+
+
+
+
+        /* 节能领航员 */
+        .energy-container {
+            top: 297px;
+            left: calc(50% - 250px/2);
+            width: 250px;
+            height: 241.88px;
+            z-index: 6;
+        }
+        
+        .energy {
+            width: 100%;
+            height: 100%;
+        }
+
+        .energy-container .card-image {
+            background-image: url('./images/energy-card.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .energy-container .next-arrow {
+            position: absolute;
+            width: 28.02px;
+            height: 27.92px;
+            left: 209.38px;
+            top: 204.38px;
+            z-index: 6;
+        }
+
+        .energy-container .arrow-icon {
+            width: 20px;
+            height: 2px;
+            background: #86A6D0;
+            position: relative;
+        }
+
+        .energy-container .arrow-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12px;
+            height: 2px;
+            background: #86A6D0;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+        /* 空间领航员 */
+        .space-container {
+            top: 345.25px;
+            left: calc(50% - 300px/2);
+            width: 300px;
+            height: 289.88px;
+            z-index: 7;
+        }
+        
+        .space {
+            width: 100%;
+            height: 100%;
+        }
+
+        .space-container .card-image {
+            background-image: url('./images/space-card.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .space-container .next-arrow {
+            position: absolute;
+            width: 33.62px;
+            height: 33.5px;
+            left: 251.25px;
+            top: 243.75px;
+            z-index: 7;
+        }
+
+        .space-container .arrow-icon {
+            width: 20px;
+            height: 2px;
+            background: #86A6D0;
+            position: relative;
+        }
+
+        .space-container .arrow-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12px;
+            height: 2px;
+            background: #86A6D0;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+        /* 性能领航员 */
+        .performance-container {
+            top: 394.44px;
+            left: calc(50% - 320px/2);
+            width: 320px;
+            height: 309.2px;
+            z-index: 8;
+        }
+        
+        .performance {
+            width: 100%;
+            height: 100%;
+        }
+
+        .performance-container .card-image {
+            background-image: url('./images/performance-card.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .performance-container .next-arrow {
+            position: absolute;
+            width: 35.86px;
+            height: 35.74px;
+            left: 268px;
+            top: 261.2px;
+            z-index: 8;
+        }
+
+        .performance-container .arrow-icon {
+            width: 20px;
+            height: 2px;
+            background: #86A6D0;
+            position: relative;
+        }
+
+        .performance-container .arrow-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12px;
+            height: 2px;
+            background: #86A6D0;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+        /* 智能领航员 */
+        .intelligent-container {
+            position: absolute;
+            width: 400px;
+            height: 386.5px;
+            left: calc(50% - 400px/2);
+            top: 445.62px;
+            z-index: 9;
+            overflow: visible;
+        }
+        
+        .intelligent {
+            width: 100%;
+            height: 100%;
+        }
+
+        .intelligent-container .card-image {
+            background-image: url('./images/intelligent-card.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .intelligent-container .next-arrow {
+            position: absolute;
+            width: 44.83px;
+            height: 44.67px;
+            left: 335px;
+            top: 323px;
+            background: rgba(239, 236, 236, 0.66);
+            z-index: 9;
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .intelligent-container .arrow-icon {
+            width: 20px;
+            height: 2px;
+            position: relative;
+            background: #86A6D0;
+            margin: 0 auto;
+        }
+
+        .intelligent-container .arrow-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12px;
+            height: 2px;
+            background: #86A6D0;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+
+
+
+
+        /* 永远置于顶层的下一页按钮 */
+        .global-next-button {
+            position: absolute;
+            width: 35.86px;
+            height: 35.74px;
+            left: 303px;
+            top: 655.64px;
+            background: rgba(239, 236, 236, 0.66);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background 0.3s ease, transform 0.3s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .global-next-button.enabled {
+            cursor: pointer;
+        }
+
+        .global-next-button.disabled {
+            cursor: not-allowed;
+        }
+
+        .global-next-button.enabled:hover {
+            background: rgba(239, 236, 236, 0.8);
+            transform: scale(1.1);
+        }
+
+        .global-next-button.enabled:active {
+            transform: scale(0.95);
+            background: rgba(239, 236, 236, 0.9);
+        }
+
+        .global-arrow-icon {
+            box-sizing: border-box;
+            position: absolute;
+            width: 19.31px;
+            height: 2px;
+            left: 8.42px;
+            top: 18.22px;
+            background: #86A6D0;
+        }
+
+        .global-arrow-icon::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 8px;
+            height: 2px;
+            background: #86A6D0;
+            transform: rotate(-45deg);
+            transform-origin: right center;
+        }
+
+        @media (max-width: 390px) {
+            .container {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background Image -->
+        <div class="background-image"></div>
+
+        <!-- Title -->
+        <div class="title"></div>
+
+        <!-- Back Button -->
+        <div class="back-button" onclick="goBack()">
+            <div class="back-arrow"></div>
+        </div>
+
+        <!-- Navigator Cards -->
+        <div class="navigator-container aesthetic-container">
+            <div class="card-image"></div>
+        </div>
+
+        <div class="navigator-container energy-container">
+            <div class="card-image"></div>
+        </div>
+
+        <div class="navigator-container space-container">
+            <div class="card-image"></div>
+        </div>
+
+        <div class="navigator-container performance-container">
+            <div class="card-image"></div>
+        </div>
+
+        <div class="navigator-container intelligent-container">
+            <div class="card-image"></div>
+        </div>
+
+        <!-- 永远置于顶层的下一页按钮 -->
+        <div class="global-next-button" id="globalNextButton">
+            <div class="global-arrow-icon"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // 轮播配置
+        const carouselOrder = ['intelligent', 'performance', 'space', 'energy', 'aesthetic', 'intelligent'];
+        let currentCarouselIndex = 0;
+        
+        // 每个领航员的原始配置（位置、层级、大小）
+        const navigatorConfigs = {
+            intelligent: {
+                top: '445.62px',
+                left: 'calc(50% - 400px/2)',
+                width: '400px',
+                height: '386.5px',
+                zIndex: 9
+            },
+            performance: {
+                top: '394.44px',
+                left: 'calc(50% - 320px/2)', // 基于自身宽度计算居中位置
+                width: '320px',
+                height: '309.2px',
+                zIndex: 8
+            },
+            space: {
+                top: '345.25px',
+                left: 'calc(50% - 300px/2)', // 基于自身宽度计算居中位置
+                width: '300px',
+                height: '289.88px',
+                zIndex: 7
+            },
+            energy: {
+                top: '297px',
+                left: 'calc(50% - 250px/2)', // 基于自身宽度计算居中位置
+                width: '250px',
+                height: '241.88px',
+                zIndex: 6
+            },
+            aesthetic: {
+                top: '258px',
+                left: 'calc(50% - 200px/2)', // 基于自身宽度计算居中位置
+                width: '200px',
+                height: '193.5px',
+                zIndex: 5
+            }
+        };
+
+        function goBack() {
+            // 返回上一页（page1）
+            window.location.href = './page1.html';
+        }
+
+        function goToPage3() {
+            // 切换到page3
+            window.location.href = './page3.html';
+        }
+
+
+
+        // 轮播到下一个位置
+        function carouselNext() {
+            currentCarouselIndex = (currentCarouselIndex + 1) % (carouselOrder.length - 1);
+            updateCarousel();
+        }
+
+        // 轮播到上一个位置（相反方向）
+        function carouselPrev() {
+            currentCarouselIndex = (currentCarouselIndex - 1 + (carouselOrder.length - 1)) % (carouselOrder.length - 1);
+            updateCarousel();
+        }
+
+
+
+        // 更新轮播显示
+        function updateCarousel() {
+            const containers = document.querySelectorAll('.navigator-container');
+            
+            containers.forEach((container, index) => {
+                const currentType = container.className.split(' ')[1].replace('-container', '');
+                const currentConfig = navigatorConfigs[currentType];
+                
+                // 计算轮播后的位置：每个container复制轮播顺序中的下一位
+                const targetIndex = (currentCarouselIndex + index + 1) % (carouselOrder.length - 1);
+                const targetType = carouselOrder[targetIndex];
+                const targetConfig = navigatorConfigs[targetType];
+                
+                // 应用新的位置、层级和大小，确保X方向居中
+                container.style.top = targetConfig.top;
+                // 根据每个container的实际宽度计算居中位置
+                const containerWidth = parseInt(targetConfig.width);
+                container.style.left = `calc(50% - ${containerWidth}px/2)`;
+                container.style.width = targetConfig.width;
+                container.style.height = targetConfig.height;
+                container.style.zIndex = targetConfig.zIndex;
+                
+                // 设置透明度：z-index值最大的领航员container透明度永远为0
+                if (targetConfig.zIndex === 9) { // 最顶端的智能领航员永远透明
+                    container.style.opacity = '0';
+                } else {
+                    // 其他所有z-index值的container都保持可见
+                    container.style.opacity = '1';
+                    container.style.transition = 'top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; // 恢复位置和大小的过渡效果
+                }
+                
+                // 检查美学container是否处于正数第二层，如果是则启用全局下一页按钮
+                if (container.className.includes('aesthetic')) {
+                    const globalNextButton = document.getElementById('globalNextButton');
+                    if (globalNextButton) {
+                        if (targetConfig.zIndex === 8) { // 正数第二层（性能领航员的位置）
+                            globalNextButton.classList.add('enabled');
+                            globalNextButton.classList.remove('disabled');
+                            globalNextButton.onclick = goToPage3;
+                        } else {
+                            globalNextButton.classList.remove('enabled');
+                            globalNextButton.classList.add('disabled');
+                            globalNextButton.onclick = null;
+                        }
+                    }
+                }
+                
+                // 更新子元素的位置和大小，确保动画效果一致
+                const cardImage = container.querySelector('.card-image');
+                
+                if (cardImage) {
+                    // 确保card-image完全填充container
+                    cardImage.style.width = '100%';
+                    cardImage.style.height = '100%';
+                    cardImage.style.borderRadius = '20px';
+                }
+                
+
+            });
+        }
+
+        // 初始化轮播
+        function initCarousel() {
+            updateCarousel();
+        }
+
+        // 处理向下滑动
+        let startY = 0;
+        let endY = 0;
+        const swipeThreshold = 50;
+        let isCarouselAnimating = false; // 防止连续触发
+        let lastSwipeTime = 0; // 记录上次滑动时间
+
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endY = e.changedTouches[0].clientY;
+            const deltaY = startY - endY;
+            const currentTime = Date.now();
+            
+            // 确保滑动距离足够且不在动画中，且距离上次滑动有足够间隔
+            if (Math.abs(deltaY) > swipeThreshold && !isCarouselAnimating && (currentTime - lastSwipeTime) > 1200) {
+                if (deltaY < 0) {
+                    // 向上滑动，触发正向轮播
+                    isCarouselAnimating = true;
+                    lastSwipeTime = currentTime;
+                    carouselNext();
+                } else {
+                    // 向下滑动，触发反向轮播
+                    isCarouselAnimating = true;
+                    lastSwipeTime = currentTime;
+                    carouselPrev();
+                }
+                
+                // 等待动画完成后再允许下一次触发
+                setTimeout(() => {
+                    isCarouselAnimating = false;
+                }, 1200); // 1200ms内不能再次触发
+            }
+        });
+
+                // 鼠标滚轮支持
+        document.addEventListener('wheel', function(e) {
+            const currentTime = Date.now();
+            
+            if (Math.abs(e.deltaY) > 0 && !isCarouselAnimating && (currentTime - lastSwipeTime) > 1200) {
+                e.preventDefault();
+                isCarouselAnimating = true;
+                lastSwipeTime = currentTime;
+                
+                if (e.deltaY < 0) {
+                    // 向上滚动，触发正向轮播
+                    carouselNext();
+                } else {
+                    // 向下滚动，触发反向轮播
+                    carouselPrev();
+                }
+                
+                // 等待动画完成后再允许下一次触发
+                setTimeout(() => {
+                    isCarouselAnimating = false;
+                }, 1200); // 1200ms内不能再次触发
+            }
+        });
+
+        // 页面加载完成后初始化轮播
+        document.addEventListener('DOMContentLoaded', function() {
+            initCarousel();
+            
+            // 初始化全局下一页按钮状态
+            const globalNextButton = document.getElementById('globalNextButton');
+            if (globalNextButton) {
+                globalNextButton.classList.add('disabled');
+            }
+        });
+    </script>
+</body>
+</html>

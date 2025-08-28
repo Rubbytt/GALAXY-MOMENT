@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GALAXY ID - 银河时刻</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Arial', 'Microsoft YaHei', sans-serif;
+            background: #000;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .container {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: #FFFFFF;
+        }
+
+        /* 美好背景 */
+        .beautiful-background {
+            position: absolute;
+            top: -58px;
+            left: -55px;
+            width: 500px;
+            height: 1111px;
+            background-image: url('./images/beautiful-background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+
+        /* GALAXY ID 标题 */
+        .galaxy-id-title {
+            position: absolute;
+            top: 131px;
+            left: 31px;
+            width: 259px;
+            height: 194px;
+            background-image: url('./images/galaxy-id-title.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 5;
+            animation: fadeInDown 1.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 美好领航员头像 */
+        .avatar {
+            position: absolute;
+            top: 242px;
+            left: 150px;
+            width: 207px;
+            height: 256px;
+            background-image: url('./images/beautiful-avatar.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 6;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 美好领航员文字 */
+        .beautiful-text {
+            position: absolute;
+            top: 513px;
+            left: 156px;
+            width: 207px;
+            height: 31px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 29px;
+            letter-spacing: 0.74em;
+            text-align: center;
+            color: #091331;
+            z-index: 7;
+            animation: fadeIn 1.5s ease-out 1s forwards;
+            opacity: 0;
+            white-space: nowrap;
+        }
+
+        /* GALAXY ID 号码 */
+        .galaxy-id-number {
+            position: absolute;
+            top: 551px;
+            left: 151px;
+            width: 207px;
+            height: 31px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 1.21em;
+            letter-spacing: 15%;
+            text-align: center;
+            color: #091331;
+            z-index: 7;
+            animation: fadeIn 1.5s ease-out 1.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Save按钮 */
+        .save-button {
+            position: absolute;
+            bottom: 64px;
+            left: 112px;
+            width: 166px;
+            height: 45px;
+            background: #091331;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 8;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1.5s ease-out 2s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .save-button:hover {
+            background: #1a2b4a;
+            transform: scale(1.02);
+        }
+
+        .save-button:active {
+            transform: scale(0.98);
+        }
+
+        .save-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.21em;
+            letter-spacing: 3%;
+            color: #FFFFFF;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            position: absolute;
+            top: 55px;
+            left: 31px;
+            width: 45px;
+            height: 45px;
+            background: rgba(95, 145, 207, 0.6);
+            border: 1px solid #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            animation: fadeIn 1.5s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        .back-button:hover {
+            background: rgba(95, 145, 207, 0.8);
+            transform: scale(1.1);
+        }
+
+        .back-arrow {
+            width: 23px;
+            height: 3px;
+            background: #FFFFFF;
+            position: relative;
+        }
+
+        .back-arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 3px;
+            background: #FFFFFF;
+            transform: rotate(-45deg);
+            transform-origin: left center;
+        }
+
+        .back-arrow::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 3px;
+            background: #FFFFFF;
+            transform: rotate(45deg);
+            transform-origin: left center;
+        }
+
+        @media (max-width: 390px) {
+            .container {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 美好背景 -->
+        <div class="beautiful-background"></div>
+
+        <!-- GALAXY ID 标题 -->
+        <div class="galaxy-id-title"></div>
+
+        <!-- 美好领航员头像 -->
+        <div class="avatar"></div>
+
+        <!-- 美好领航员文字 -->
+        <div class="beautiful-text">美好领航员</div>
+
+        <!-- GALAXY ID 号码 -->
+        <div class="galaxy-id-number">No.000012345</div>
+
+        <!-- Save按钮 -->
+        <div class="save-button" onclick="saveGalaxyID()">
+            <div class="save-text">Save</div>
+        </div>
+
+        <!-- 返回按钮 -->
+        <div class="back-button" onclick="goBack()">
+            <div class="back-arrow"></div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            // 返回上一页
+            window.history.back();
+        }
+
+        function saveGalaxyID() {
+            // 获取当前的GALAXY ID
+            const galaxyIDElement = document.querySelector('.galaxy-id-number');
+            const currentGalaxyID = galaxyIDElement ? galaxyIDElement.textContent : 'No.00000000';
+            
+            console.log('保存 GALAXY ID:', currentGalaxyID);
+            
+            // 保存图片到本地
+            savePageAsImage(currentGalaxyID);
+        }
+
+        // 保存页面为图片
+        function savePageAsImage(galaxyID) {
+            // 显示保存中提示
+            const saveButton = document.querySelector('.save-button');
+            const originalText = saveButton.querySelector('.save-text').textContent;
+            saveButton.querySelector('.save-text').textContent = '保存中...';
+            saveButton.style.pointerEvents = 'none';
+            
+            // 使用html2canvas将页面转换为图片
+            html2canvas(document.querySelector('.container'), {
+                backgroundColor: '#FFFFFF',
+                scale: 2, // 提高图片质量
+                useCORS: true,
+                allowTaint: true,
+                width: 390,
+                height: 844
+            }).then(canvas => {
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.download = `GALAXY_ID_${galaxyID.replace(/[^0-9]/g, '')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                
+                // 触发下载
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // 恢复按钮状态
+                saveButton.querySelector('.save-text').textContent = originalText;
+                saveButton.style.pointerEvents = 'auto';
+                
+                // 显示成功提示
+                showSuccessMessage('图片已保存到本地！');
+                
+            }).catch(error => {
+                console.error('保存图片失败:', error);
+                
+                // 恢复按钮状态
+                saveButton.querySelector('.save-text').textContent = originalText;
+                saveButton.style.pointerEvents = 'auto';
+                
+                // 显示错误提示
+                showErrorMessage('保存图片失败，请重试');
+            });
+        }
+
+        // 显示成功消息
+        function showSuccessMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 128, 0, 0.9);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                font-size: 16px;
+                z-index: 1000;
+                animation: fadeInOut 2s ease-in-out forwards;
+            `;
+            
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(messageDiv);
+            
+            // 2秒后自动移除
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+                if (style.parentNode) {
+                    style.parentNode.removeChild(style);
+                }
+            }, 2000);
+        }
+
+        // 显示错误消息
+        function showErrorMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 0, 0, 0.9);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                font-size: 16px;
+                z-index: 1000;
+                animation: fadeInOut 2s ease-in-out forwards;
+            `;
+            
+            document.body.appendChild(messageDiv);
+            
+            // 2秒后自动移除
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 2000);
+        }
+
+        // 生成随机GALAXY ID号码
+        function generateRandomGalaxyID() {
+            const prefix = 'No.0000';
+            const randomDigits = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return prefix + randomDigits;
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page5 loaded successfully');
+            
+            // 生成随机GALAXY ID号码
+            const randomGalaxyID = generateRandomGalaxyID();
+            const galaxyIDElement = document.querySelector('.galaxy-id-number');
+            if (galaxyIDElement) {
+                galaxyIDElement.textContent = randomGalaxyID;
+            }
+            
+            console.log('GALAXY ID:', randomGalaxyID);
+        });
+    </script>
+</body>
+</html>

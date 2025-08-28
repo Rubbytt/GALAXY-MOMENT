@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>银河时刻 GALAXY MOMENT - 吉利银河全域AI生态大会</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            background: #000;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        .container {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .page-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: absolute;
+            top: calc(100vh - 1980.69px + 50px);
+            left: -114px;
+            width: 618.17px;
+            height: 1980.69px;
+            background-image: url('./images/background-56586a.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            transition: transform 0.1s ease-out;
+        }
+
+
+
+        .logo {
+            position: absolute;
+            top: 58px;
+            left: 34px;
+            width: 161px;
+            height: 22px;
+            z-index: 10;
+            background-image: url('./images/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .title-section {
+            position: absolute;
+            top: 312px;
+            left: 52px;
+            width: 286px;
+            height: 79px;
+            z-index: 10;
+            background-image: url('./images/galaxy-moment-title.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            animation: fadeInTitle 2s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInTitle {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .invitation {
+            position: fixed;
+            top: 625px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 128px;
+            height: 86px;
+            z-index: 10;
+            background-image: url('./images/invitation.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            animation: fadeInInvitation 2s ease-out 1s forwards;
+        }
+
+
+
+        @keyframes fadeInInvitation {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+
+
+
+
+        .decorative-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        .star:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+        .star:nth-child(2) { top: 30%; left: 85%; animation-delay: 0.8s; }
+        .star:nth-child(3) { top: 40%; left: 20%; animation-delay: 1.6s; }
+        .star:nth-child(4) { top: 50%; left: 80%; animation-delay: 2.4s; }
+        .star:nth-child(5) { top: 60%; left: 25%; animation-delay: 0.4s; }
+        .star:nth-child(6) { top: 70%; left: 75%; animation-delay: 1.2s; }
+        .star:nth-child(7) { top: 80%; left: 35%; animation-delay: 2.0s; }
+        .star:nth-child(8) { top: 90%; left: 65%; animation-delay: 2.8s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        .galaxy-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 5s infinite linear;
+        }
+
+        .particle:nth-child(1) { top: 15%; left: 25%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 25%; left: 75%; animation-delay: 1s; }
+        .particle:nth-child(3) { top: 35%; left: 15%; animation-delay: 2s; }
+        .particle:nth-child(4) { top: 45%; left: 85%; animation-delay: 3s; }
+        .particle:nth-child(5) { top: 55%; left: 20%; animation-delay: 0.5s; }
+        .particle:nth-child(6) { top: 65%; left: 80%; animation-delay: 1.5s; }
+        .particle:nth-child(7) { top: 75%; left: 30%; animation-delay: 2.5s; }
+        .particle:nth-child(8) { top: 85%; left: 70%; animation-delay: 3.5s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 390px) {
+            .container {
+                width: 100%;
+                height: 100vh;
+            }
+            
+            .background {
+                left: -50px;
+                width: 100vw;
+                height: 100vh;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-container">
+            <!-- Background Image -->
+            <div class="background"></div>
+            
+            <!-- Decorative Elements -->
+            <div class="decorative-elements">
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+            </div>
+            
+            <!-- Galaxy Particles -->
+            <div class="galaxy-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo"></div>
+        
+        <!-- Title Section -->
+        <div class="title-section"></div>
+        
+        <!-- Invitation Element -->
+        <div class="invitation"></div>
+
+    </div>
+    </div>
+
+    <script>
+        // Interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            const pageContainer = document.querySelector('.page-container');
+            const background = document.querySelector('.background');
+            const stars = document.querySelectorAll('.star');
+            const particles = document.querySelectorAll('.particle');
+            
+            let isScrolling = false;
+            let currentScrollY = 0;
+            let maxScrollY = 0;
+            
+            // Calculate max scroll distance (background height - container height)
+            function calculateMaxScroll() {
+                const backgroundHeight = 1980.69;
+                const containerHeight = 844;
+                maxScrollY = backgroundHeight - containerHeight;
+            }
+            
+            calculateMaxScroll();
+            
+            // Function to navigate to page2
+            function startTransitionToPage2() {
+                console.log('Starting transition to page2...');
+                
+                // Add a small delay to allow background movement
+                setTimeout(() => {
+                    console.log('Navigating to page2...');
+                    window.location.href = './page2.html';
+                }, 300); // 300ms delay to allow background movement
+            }
+            
+            // Mouse move effect for stars
+            container.addEventListener('mousemove', function(e) {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                stars.forEach((star, index) => {
+                    const speed = (index + 1) * 0.015;
+                    star.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                });
+            });
+            
+            // Click effect for particles
+            container.addEventListener('click', function(e) {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Create new particle at click position
+                const newParticle = document.createElement('div');
+                newParticle.className = 'particle';
+                newParticle.style.left = x + 'px';
+                newParticle.style.top = y + 'px';
+                newParticle.style.animation = 'float 3s forwards';
+                
+                document.querySelector('.galaxy-particles').appendChild(newParticle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    newParticle.remove();
+                }, 3000);
+            });
+            
+            // Scroll effect for background movement
+            pageContainer.addEventListener('scroll', function(e) {
+                if (!isScrolling) {
+                    isScrolling = true;
+                    requestAnimationFrame(updateBackground);
+                }
+            });
+            
+            function updateBackground() {
+                currentScrollY = pageContainer.scrollTop;
+                
+                // Move background image based on scroll position
+                // Initial position: background bottom aligns with viewport bottom
+                // When scrolling up, background moves up to reveal more content
+                const translateY = currentScrollY * 0.5;
+                background.style.transform = `translateY(-${translateY}px)`;
+                
+                // Check if scrolling up (negative scrollTop) and trigger transition
+                if (currentScrollY < 0) {
+                    console.log('Scrolling up detected, starting transition to page2...');
+                    startTransitionToPage2();
+                }
+                
+                isScrolling = false;
+            }
+            
+            // Touch and wheel events for mobile
+            pageContainer.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const delta = e.deltaY;
+                const newScrollTop = pageContainer.scrollTop + delta;
+                
+                // Allow scrolling up (negative values) to reach background top
+                if (newScrollTop >= -maxScrollY && newScrollTop <= maxScrollY) {
+                    pageContainer.scrollTop = newScrollTop;
+                }
+                
+                // Check if scrolling up and trigger transition immediately
+                if (delta > 0) { // delta > 0 means scrolling up
+                    console.log('Wheel scroll up detected, starting transition to page2...');
+                    startTransitionToPage2();
+                }
+            });
+            
+            // Touch events for mobile
+            let touchStartY = 0;
+            let touchStartScrollTop = 0;
+            let touchEndY = 0;
+            let isTransitioning = false; // Prevent multiple transitions
+            
+            pageContainer.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                touchStartScrollTop = pageContainer.scrollTop;
+                
+                console.log('Touch start - Y:', touchStartY, 'ScrollTop:', touchStartScrollTop);
+                
+                // Check if touch started from bottom area of screen
+                const screenHeight = window.innerHeight;
+                const touchStartScreenY = e.touches[0].clientY;
+                
+                // If touch starts from bottom 30% of screen, it's a screen swipe
+                if (touchStartScreenY > screenHeight * 0.7) {
+                    console.log('Touch started from bottom screen area');
+                }
+            });
+            
+            pageContainer.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                const touchY = e.touches[0].clientY;
+                const deltaY = touchStartY - touchY;
+                const newScrollTop = touchStartScrollTop + deltaY;
+                
+                console.log('Touch move - Y:', touchY, 'deltaY:', deltaY, 'newScrollTop:', newScrollTop);
+                
+                // Allow scrolling up (negative values) to reach background top
+                if (newScrollTop >= -maxScrollY && newScrollTop <= maxScrollY) {
+                    pageContainer.scrollTop = newScrollTop;
+                }
+                
+                // Check if swiping up during touch move and trigger transition
+                if (deltaY > 100 && !isTransitioning) { // Increased threshold to allow background movement
+                    console.log('Touch move up detected, starting transition to page2...');
+                    isTransitioning = true;
+                    startTransitionToPage2();
+                }
+                
+                // Check if swiping up from bottom screen area (more sensitive)
+                const screenHeight = window.innerHeight;
+                if (touchStartY > screenHeight * 0.7 && deltaY > 80 && !isTransitioning) {
+                    console.log('Screen swipe up from bottom detected, starting transition to page2...');
+                    isTransitioning = true;
+                    startTransitionToPage2();
+                }
+            });
+            
+            pageContainer.addEventListener('touchend', function(e) {
+                touchEndY = e.changedTouches[0].clientY;
+                const deltaY = touchStartY - touchEndY;
+                
+                console.log('Touch end - deltaY:', deltaY, 'scrollTop:', pageContainer.scrollTop);
+                
+                // Check if swiped up and trigger transition immediately
+                if (deltaY > 80 && !isTransitioning) { // Increased threshold to allow background movement
+                    console.log('Touch swipe up detected, starting transition to page2...');
+                    isTransitioning = true;
+                    startTransitionToPage2();
+                }
+            });
+            
+            // Add global touch event listener for better swipe detection
+            document.addEventListener('touchstart', function(e) {
+                // Only handle if not already transitioning
+                if (isTransitioning) return;
+                
+                const touchY = e.touches[0].clientY;
+                const screenHeight = window.innerHeight;
+                
+                // If touch starts from bottom area, mark it for potential screen swipe
+                if (touchY > screenHeight * 0.8) {
+                    console.log('Global touch started from bottom area:', touchY);
+                }
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                // Only handle if not already transitioning
+                if (isTransitioning) return;
+                
+                const touchY = e.touches[0].clientY;
+                const deltaY = touchStartY - touchY;
+                
+                // Global upward swipe detection
+                if (deltaY > 80 && touchStartY > window.innerHeight * 0.8) {
+                    console.log('Global upward swipe detected, starting transition to page2...');
+                    isTransitioning = true;
+                    startTransitionToPage2();
+                }
+            });
+            
+            // Add CSS animation for next page
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
